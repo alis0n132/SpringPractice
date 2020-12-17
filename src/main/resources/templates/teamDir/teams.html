@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Matches</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/mainCss.css" >
+</head>
+<body>
+<h1>Команды</h1>
+
+<table class="tg">
+    <tr>
+        <th width="30">ID</th>
+        <th width="50">Логотип</th>
+        <th width="100">Название</th>
+        <th width="120">Описание</th>
+        <th width="20">Счет</th>
+        <th width="70">Удаление</th>
+    </tr>
+    <tr th:each="team : ${teamList}">
+        <td th:text="${team.getTeamId()}"/>
+        <td><img th:src="'/pictures/' + ${team.getImage()}"  width="60" height="70"></td>
+        <td><a th:href="@{/teams/{id}(id=${team.getTeamId()})}" th:text="${team.getName()}"></a></td>
+        <td th:text="${team.getDescription()}"/>
+        <td th:text="${team.getScore()}"/>
+        <td><a th:href="@{/deleteTeam/{id}(id=${team.getTeamId()})}">Удалить</a></td>
+    </tr>
+</table>
+<div><a class="btn" href="/teams/new">Добавление команды</a></div>
+<div><a href="/home" class="btn">Главная страница</a></div>
+</body>
+</html>

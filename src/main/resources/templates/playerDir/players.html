@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Matches</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/mainCss.css">
+</head>
+<body>
+<h1>Players</h1>
+
+<table class="tg">
+    <tr>
+        <th width="30">ID</th>
+        <th width="120">Имя</th>
+        <th width="120">Биография</th>
+        <th width="120">Команда</th>
+        <th width="120">Удаление</th>
+    </tr>
+    <tr th:each="player : ${playersList}">
+        <td th:text="${player.getPlayerId()}"/>
+        <td><a th:href="@{/players/{id}(id=${player.getPlayerId()})}" th:text="${player.getName()}"></a></td>
+        <td th:text="${player.getBio()}"/>
+        <td th:text="${player.getTeam().getName()}"/>
+        <td><a th:href="@{/deletePlayer/{id}(id=${player.getPlayerId()})}">Удалить</a></td>
+    </tr>
+</table>
+<div>
+    <a href="/players/new" class="btn">Добавить игрока</a>
+</div>
+<div><a href="/home" class="btn">Главная страница</a></div>
+</body>
+</html>

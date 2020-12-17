@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Matches</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/mainCss.css">
+</head>
+
+<h1>Подробности Матча</h1>
+
+<table class="tg" th:if="${match != null}">
+    <tr>
+        <th width="80">ID</th>
+        <th width="120">Дома</th>
+        <th width="120">В гостях</th>
+        <th width="120">Результат матча</th>
+        <th width="120">Судья</th>
+        <th width="120">Второй арбитр</th>
+        <th width="120">Третий арбитр</th>
+        <th width="120">Cтадион</th>
+    </tr>
+    <tr>
+        <td th:text="${match.getMatchId()}"/>
+        <td><a th:href="@{~/teams/{id}(id=${match.getHomeTeam().getTeamId()})}"
+               th:text="${match.getHomeTeam().getName()}"></a></td>
+        <td><a th:href="@{/teams/{id}(id=${match.getGuestTeam().getTeamId()})}"
+               th:text="${match.getGuestTeam().getName()}"></a></td>
+        <td th:text="${match.getScore()}"/>
+        <td th:text="${match.getMainJudge().getName()}"/>
+        <td th:text="${match.getSecondJudge().getName()}"/>
+        <td th:text="${match.getThirdJudge().getName()}"/>
+        <td th:text="${match.getStadion()}"/>
+
+    </tr>
+</table>
+<h2 th:unless="${match != null}">Матча с таким ID не существует</h2>
+<br/>
+<div>
+
+    <div>
+        <h3>Голы</h3>
+    </div>
+    <table class="tg" th:if="${match.getGoals()} != null">
+        <tr>
+            <th width="40">Id</th>
+            <th width="120">Время</th>
+            <th width="200">Кто забил</th>
+        </tr>
+        <tr th:each="goal :${match.getGoals()}">
+            <td th:text="${goal.getGoalId()}"></td>
+            <td th:text="${goal.getTime()}"></td>
+            <td th:text="${goal.getPlayer().name}"></td>
+        </tr>
+    </table>
+    <div><a class="btn" th:href="@{/addGoal/{id}(id=${match.getMatchId()})}">Добавить Гол</a></div>
+    <div th:unless="${match.getGoals() != null}"><h4>Голов в этом матче нет</h4></div>
+</div>
+<br/>
+<div>
+    <div>
+        <h3>Карточки</h3>
+    </div>
+    <table class="tg" th:if="${match.getCards()} != null">
+        <tr>
+            <th width="40">Id</th>
+            <th width="120">Игрок</th>
+            <th width="120">Тип карточки</th>
+        </tr>
+        <tr th:each="card :${match.getCards()}">
+            <td th:text="${card.getCardId()}"></td>
+            <td th:text="${card.getPlayer().name}"></td>
+            <td th:text="${card.getColor()}"></td>
+        </tr>
+
+    </table>
+
+    <div th:unless="${match.getCards() != null}"><h4>Карточек в этом матче нет</h4></div>
+</div>
+<div><a class="btn" href="/teams">Все команды</a></div>
+<div><a href="/home" class="btn">Главная страница</a></div>
+</body>
+</html>

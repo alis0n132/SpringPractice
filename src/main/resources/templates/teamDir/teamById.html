@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Matches</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/mainCss.css">
+</head>
+<body>
+<h1>Team</h1>
+
+<table class="tg">
+    <tr>
+        <th width="30">ID</th>
+        <th width="120">Название</th>
+        <th width="120">Описание</th>
+        <th width="120">Счет</th>
+    </tr>
+    <tr th:if="${team != null}">
+        <td th:text="${team.getTeamId()}"/>
+        <td th:text="${team.getName()}"/>
+        <td th:text="${team.getDescription()}"/>
+        <td th:text="${team.getScore()}"/>
+    </tr>
+</table>
+<h2 th:unless="${team != null}">Команды с таким ID не существует</h2>
+</table>
+<table class="tg">
+    <tr>
+        <th width="30">№:</th>
+        <th width="150">Игрок</th>
+    </tr>
+    <tr th:each="player: ${team.getPlayers()}">
+        <td th:text="${player.getPlayerId()}"></td>
+        <td th:text="${player.getName()}"></td>
+    </tr>
+</table>
+<div>
+    <a class="btn" th:href="@{/editTeam/{id}(id=${team.getTeamId()})}">Редактировать</a>
+</div>
+<div><a class="btn" href="/teams">Все команды</a></div>
+<div><a href="/home" class="btn">Главная страница</a></div>
+</body>
+</html>

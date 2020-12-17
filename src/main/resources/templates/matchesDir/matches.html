@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Matches</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/mainCss.css">
+</head>
+<body>
+<h1>Lasts Matches</h1>
+
+<table class="tg">
+    <tr>
+        <th width="80">Подробнее</th>
+        <th width="120">Дома</th>
+        <th width="120">В гостях</th>
+        <th width="120">Результат матча</th>
+        <th width="120">Судья</th>
+        <th width="120">Второй арбитр</th>
+        <th width="120">Третий арбитр</th>
+        <th width="120">Cтадион</th>
+        <th width="120">Удаление</th>
+    </tr>
+    <tr th:each="match : ${matchesList}">
+
+        <td><a th:href="@{~/matches/{id}(id=${match.getMatchId()})}">Подробнее</a></td>
+
+        <td><a th:text="${match.getHomeTeam().getName()}" th:href="@{~/teams/{id}(id=${match.getHomeTeam().getTeamId()})}"></a></td>
+
+        <td><a th:href="@{/teams/{id}(id=${match.getGuestTeam().getTeamId()})}"
+               th:text="${match.getGuestTeam().getName()}"></a></td>
+
+        <td th:text="${match.getScore()}"/>
+        <td th:text="${match.getMainJudge().getName()}"/>
+        <td th:text="${match.getSecondJudge().getName()}"/>
+        <td th:text="${match.getThirdJudge().getName()}"/>
+        <td th:text="${match.getStadion()}"/>
+        <td><a th:href="@{/deleteMatch/{id}(id=${match.getMatchId()})}">Удалить</a></td>
+    </tr>
+</table>
+
+<br/>
+<div>
+    <a href="/matches/new" class="btn">Добавить Матч</a>
+</div>
+<div><a href="/home" class="btn">Главная страница</a></div>
+
+</body>
+</html>

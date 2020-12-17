@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Players</title>
+    <link rel="stylesheet" type="text/css" href="../../static/css/mainCss.css">
+</head>
+<body>
+<h1>Players</h1>
+
+<table class="tg">
+    <tr>
+        <th width="30">ID</th>
+        <th width="120">Имя</th>
+        <th width="120">Биография</th>
+        <th width="120">Команда</th>
+    </tr>
+    <tr th:if="${player != null}">
+        <td th:text="${player.getPlayerId()}"/>
+        <td th:text="${player.getName()}"/>
+        <td th:text="${player.getBio()}"/>
+        <td th:text="${player.getTeam().getName()}"/>
+    </tr>
+    <h2 th:unless="${player != null}">Футболиста с таким ID не существует</h2>
+</table>
+<br/>
+<h2>Голы Игрока на турнире</h2>
+<div>
+    <table class="tg" th:if="goals != null">
+        <tr>
+            <th width="40">Id Гола</th>
+            <th width="200">Maтч</th>
+            <th width="120">Время</th>
+        </tr>
+        <tr th:each="goal :${goals}">
+            <td th:text="${goal.getGoalId()}"></td>
+            <td><a th:href="@{~/matches/{id}(id=${goal.getMatch().getMatchId()})}">Матч</a></td>
+            <td th:text="${goal.getTime()}"></td>
+        </tr>
+    </table>
+    <h2 th:unless="${goals != null}">У игрока нет забитых голов</h2>
+</div>
+<div>
+    <div>
+        <h3>Карточки</h3>
+    </div>
+    <table class="tg" th:if="${player.getCards() != null}">
+        <tr>
+            <th width="40">Id</th>
+            <th width="120">Игрок</th>
+            <th width="120">Тип карточки</th>
+        </tr>
+        <tr th:each="card :${player.getCards()}">
+            <td th:text="${card.getCardId()}"></td>
+            <td th:text="${card.getPlayer().name}"></td>
+            <td th:text="${card.getColor()}"></td>
+        </tr>
+
+    </table>
+
+    <div th:unless="${player.getCards() != null}"><h4>Карточек в этого игрока нет</h4></div>
+</div>
+<div><a th:href="@{~/editPlayer/{id}(id=${player.getPlayerId()})}" class="btn">Редактировать Игрока</a></div>
+<div><a href="/players" class="btn">Игроки</a></div>
+<div><a href="/home" class="btn">Главная страница</a></div>
+</body>
+</html>

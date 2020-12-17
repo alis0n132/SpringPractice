@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="../../static/css/mainCss.css">
+    <meta charset="UTF-8">
+    <title>Добавление гола</title>
+</head>
+<body>
+<h1>Добавление гола</h1>
+<form action="/addGoal/" th:object="${goal}" method="post">
+    <div>
+    <label for="match">Матч</label>
+        <input readonly class="input" type="text" name="match" th:value="${match.getMatchId()}" id="match"/>
+    </div>
+
+    <div>
+        <label>Забивший Игрок</label>
+        <select  class="select-style" name="player" id="player" th:field="*{player}">
+            <option th:each="player : ${players}" th:value="${player.getPlayerId()}" th:text="${player.getName()}"></option>
+        </select>
+    </div>
+    <label for="time">Время</label>
+    <input class="input" type="text" th:field="*{time}" id="time"/>
+
+    <div>
+        <input class="input" type="submit" value="Добавить Гол"/>
+    </div>
+</form>
+<div>
+    <a class="btn" href="/players/">Игроки</a>
+</div>
+<div><a href="/home" class="btn">Главная страница</a></div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="../../static/css/mainCss.css">
+    <meta charset="UTF-8">
+    <title>Добавление игрока</title>
+</head>
+<body>
+<h1>Добавление игрока</h1>
+<form action="/players/new" th:object="${player}" method="post">
+    <label>Имя Игрока</label>
+    <input class="input" type="text" th:field="*{name}" id="playerName"/>
+    <br/>
+
+    <label>Биография Игрока </label>
+    <label for="playerBio"></label>
+    <input class="input" type="text" th:field="*{bio}" id="playerBio"/>
+    <br/>
+    <div>
+        <label for="team">Команда </label>
+        <select class="select-style" name="playerTeam" id="team" th:field="*{team}">
+            <div th:each="team : ${teams}">
+                <option th:value="${team.getTeamId()}" th:text="${team.getName()}"></option>
+            </div>
+        </select>
+    </div>
+    <div>
+        <input class="input" type="submit" value="Добавить Игрока"/>
+    </div>
+</form>
+<div>
+    <a class="btn" href="/players/">Игроки</a>
+</div>
+<div><a href="/home" class="btn">Главная страница</a></div>
+</body>
+</html>
