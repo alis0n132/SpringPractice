@@ -1,4 +1,4 @@
-package com.football.footballChampion;
+package com.football.footballChampion.config;
 
 import org.springframework.context.annotation.Configuration;
 
