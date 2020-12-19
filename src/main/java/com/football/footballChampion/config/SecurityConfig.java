@@ -1,7 +1,9 @@
 package com.football.footballChampion.config;
 
+import com.football.footballChampion.roles.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -11,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
-import java.net.PasswordAuthentication;
 
 @Configuration
 @EnableWebSecurity
@@ -19,17 +20,34 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.GET, "/").permitAll()
+                .antMatchers(HttpMethod.GET, "/deletePlayer/*").hasRole(Role.ADMIN.name())
+                .antMatchers(HttpMethod.GET, "/deleteTeam/*").hasRole(Role.ADMIN.name())
+                .antMatchers(HttpMethod.GET, "/deleteMatch/*").hasRole(Role.ADMIN.name())
+                .antMatchers(HttpMethod.POST, "/**").hasRole(Role.ADMIN.name())
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();
+
     }
 
     @Bean
     @Override
     protected UserDetailsService userDetailsService() {
-        return new InMemoryUserDetailsManager(User.builder()
-                .username("admin")
-                .password(passwordEncoder().encode("admin"))
-                .roles("ADMIN")
-                .build()
+        return new InMemoryUserDetailsManager(
+                User.builder()
+                    .username("admin")
+                    .password(passwordEncoder().encode("admin"))
+                    .roles(Role.ADMIN.name())
+                    .build(),
+                User.builder()
+                        .username("user")
+                        .password(passwordEncoder().encode("user"))
+                        .roles(Role.USER.name())
+                        .build()
         );
     }
 
