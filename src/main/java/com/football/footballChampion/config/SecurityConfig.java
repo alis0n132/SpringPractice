@@ -1,6 +1,7 @@
 package com.football.footballChampion.config;
 
-import com.football.footballChampion.roles.Role;
+import com.football.footballChampion.visitors.Permission;
+import com.football.footballChampion.visitors.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,10 +24,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/").permitAll()
-                .antMatchers(HttpMethod.GET, "/deletePlayer/*").hasRole(Role.ADMIN.name())
-                .antMatchers(HttpMethod.GET, "/deleteTeam/*").hasRole(Role.ADMIN.name())
-                .antMatchers(HttpMethod.GET, "/deleteMatch/*").hasRole(Role.ADMIN.name())
-                .antMatchers(HttpMethod.POST, "/**").hasRole(Role.ADMIN.name())
+                .antMatchers(HttpMethod.GET, "/deletePlayer/*").hasAuthority(Permission.WRITE.getPermission())
+                .antMatchers(HttpMethod.GET, "/players/new").hasRole(Permission.WRITE.getPermission())
+                .antMatchers(HttpMethod.GET, "/teams/new").hasRole(Permission.WRITE.getPermission())
+                .antMatchers(HttpMethod.GET, "/deleteTeam/*").hasRole(Permission.WRITE.getPermission())
+                .antMatchers(HttpMethod.GET, "/deleteMatch/*").hasRole(Permission.WRITE.getPermission())
+                .antMatchers(HttpMethod.GET, "/matches/new").hasRole(Permission.WRITE.getPermission())
+                .antMatchers(HttpMethod.POST, "/**").hasRole(Permission.WRITE.getPermission())
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -41,12 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 User.builder()
                     .username("admin")
                     .password(passwordEncoder().encode("admin"))
-                    .roles(Role.ADMIN.name())
+                    .roles(Permission.WRITE.getPermission())
                     .build(),
                 User.builder()
                         .username("user")
                         .password(passwordEncoder().encode("user"))
-                        .roles(Role.USER.name())
+                        .roles(Permission.READ.getPermission())
                         .build()
         );
     }
