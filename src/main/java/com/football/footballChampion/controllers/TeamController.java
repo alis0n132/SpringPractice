@@ -53,7 +53,7 @@ public class TeamController {
     }
 
     @PostMapping("/teams/new")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public String addTeam(TeamEntity team, @RequestParam("file") MultipartFile file) {
         if (file != null) {
             try {
@@ -68,14 +68,14 @@ public class TeamController {
     }
 
     @GetMapping("/deleteTeam/{id}")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public String deletePlayer(@PathVariable("id") Integer id) {
         teamService.deleteById(id);
         return "redirect:/teams";
     }
 
     @GetMapping("/editTeam/{id}")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public String editTeamPage(@PathVariable("id") Integer id, Model model) {
         TeamEntity team = teamService.getTeamById(id);
         model.addAttribute("team", team);
@@ -84,7 +84,7 @@ public class TeamController {
     }
 
     @PostMapping("/editTeam")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public String editTeam(TeamEntity team) {
         teamService.save(team);
         return "redirect:/teams";

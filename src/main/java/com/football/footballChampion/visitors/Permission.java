@@ -1,8 +1,8 @@
 package com.football.footballChampion.visitors;
 
 public enum Permission {
-    READ("read"),
-    WRITE("write");
+    READ("READ"),
+    WRITE("WRITE");
     private final String permission;
 
     Permission(String permission) {

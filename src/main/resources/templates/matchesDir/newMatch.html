@@ -8,16 +8,17 @@
 <body>
 <br>
 <form action="/matches/new" th:object="${matchEntity}" method="post">
-    <label for="homeTeamId"> Дома:
-        <select name="homeTeam" id="homeTeamId" th:field="*{homeTeam}">
+
+    <label class="label" for="homeTeamId"> Дома:
+        <select class="select-style" name="homeTeam" id="homeTeamId" th:field="*{homeTeam}">
             <div th:each="team : ${teamsList}">
                 <option th:value="${team.getTeamId()}" th:text="${team.getName()}"></option>
             </div>
         </select>
     </label>
     <div>
-        <label for="guestTeamId">GUEST TEAM
-            <select name="guestTeam" id="guestTeamId" th:field="*{guestTeam}">
+        <label class="label" for="guestTeamId">В гостях:
+            <select class="select-style" name="guestTeam" id="guestTeamId" th:field="*{guestTeam}">
                 <div th:each="team : ${teamsList}">
                     <option th:value="${team.getTeamId()}" th:text="${team.getName()}"></option>
                 </div>
@@ -25,13 +26,13 @@
         </label>
     </div>
     <div>
-        <label>СЧЕТ
-            <input type="text" id="score" th:field="${matchEntity.score}"/>
+        <label class="label">СЧЕТ:
+            <input class="input" type="text" id="score" th:field="${matchEntity.score}"/>
         </label>
     </div>
     <div>
-        <label for="mainArbitreId">Главный судья
-            <select name="mainArbitre" id="mainArbitreId" th:field="*{mainJudge}">
+        <label class="label" for="mainArbitreId">Главный судья:
+            <select class="select-style" name="mainArbitre" id="mainArbitreId" th:field="*{mainJudge}">
                 <div th:each="arbiter : ${arbitersList}">
                     <option th:value="${arbiter.getArbitreId()}" th:text="${arbiter.getName()}"/>
                 </div>
@@ -39,8 +40,8 @@
         </label>
     </div>
     <div>
-        <label for="secondArbiter">Второй судья
-            <select name="setSecondArbiter" id="secondArbiter" th:field="*{secondJudge}">
+        <label class="label" for="secondArbiter">Второй судья:
+            <select class="select-style" name="setSecondArbiter" id="secondArbiter" th:field="*{secondJudge}">
                 <div th:each="arbiter : ${arbitersList}">
                     <option th:value="${arbiter.getArbitreId()}" th:text="${arbiter.getName()}"/>
                 </div>
@@ -48,8 +49,8 @@
         </label>
     </div>
     <div>
-        <label for="thridArbiter">Третий судья
-            <select name="setThirdArbiter" id="thridArbiter" th:field="*{thirdJudge}">
+        <label class="label" for="thridArbiter">Третий судья:
+            <select class="select-style" name="setThirdArbiter" id="thridArbiter" th:field="*{thirdJudge}">
                 <div th:each="arbiter : ${arbitersList}">
                     <option th:value="${arbiter.getArbitreId()}" th:text="${arbiter.getName()}"/>
                 </div>
@@ -57,12 +58,12 @@
         </label>
     </div>
     <div>
-        <label>Стадион
-            <input type="text" id="stadion" th:field="${matchEntity.stadion}"/>
+        <label class="label">Стадион:
+            <input class="input" type="text" id="stadion" th:field="${matchEntity.stadion}"/>
         </label>
     </div>
 
-    <input type="submit" value="Add Match">
+    <input type="submit" class="btn" value="Add Match">
 </form>
 <div><a href="/home" class="btn">Главная страница</a></div>
 </body>

@@ -56,21 +56,21 @@ public class PlayerController {
         return "playerDir/newPlayer";
     }
     @PostMapping("/players/new")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public String addPlayer(PlayerEntity player){
         playerService.save(player);
         return "redirect:/players";
     }
 
     @GetMapping("/players/delete/{id}")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public String deletePlayer(@PathVariable("id") Integer id){
         playerService.deleteById(id);
         return "redirect:/players";
     }
 
     @GetMapping("/players/edit/{id}")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public String editPlayerPage(@PathVariable("id") Integer id, Model model){
         PlayerEntity player = playerService.getPlayerById(id);
         List<TeamEntity> teams = teamService.listAll();
@@ -82,7 +82,7 @@ public class PlayerController {
     }
 
     @PostMapping("/players/edit")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public String editPlayer(PlayerEntity playerEntity){
         playerService.save(playerEntity);
         return "redirect:/players";

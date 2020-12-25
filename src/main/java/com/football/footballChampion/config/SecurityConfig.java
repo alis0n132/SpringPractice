@@ -4,7 +4,6 @@ import com.football.footballChampion.visitors.Permission;
 import com.football.footballChampion.visitors.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,8 +25,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/").permitAll()
                 .anyRequest()
                 .authenticated()
+                .and()
+                .formLogin()
                 .and()
                 .httpBasic();
     }
@@ -39,12 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 User.builder()
                     .username("admin")
                     .password(passwordEncoder().encode("admin"))
-                    .roles(Permission.WRITE.getPermission())
+                    .authorities(Role.ADMIN.getAuthorities())
                     .build(),
                 User.builder()
                         .username("user")
                         .password(passwordEncoder().encode("user"))
-                        .roles(Permission.READ.getPermission())
+                        .authorities(Role.USER.getAuthorities())
                         .build()
         );
     }

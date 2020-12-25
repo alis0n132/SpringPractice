@@ -55,7 +55,7 @@ public class MatchController {
     }
 
     @GetMapping("/matches/new")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public String newMatch(Model model){
         List<TeamEntity> teams = teamService.listAll();
         List<ArbitreEntity> arbitersList = arbitreService.listAll();
@@ -66,13 +66,13 @@ public class MatchController {
     }
 
     @PostMapping("/matches/new")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public String addNewMatch(MatchEntity newMatch){
         matchService.save(newMatch);
         return "redirect:/matches";
     }
 
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     @GetMapping("/deleteMatch/{id}")
     public String deleteMatch(@PathVariable("id") Integer id){
         matchService.deleteById(id);
@@ -93,7 +93,7 @@ public class MatchController {
     }
 
     @PostMapping("/addGoal/")
-    @PreAuthorize("hasAuthority('write')")
+    @PreAuthorize("hasAuthority('WRITE')")
     public String addGoalPage(@ModelAttribute("goal") GoalEntity goal){
         goalService.save(goal);
         System.out.println(goal.getGoalId());
