@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Matches</title>
     <link rel="stylesheet" type="text/css" href="../../static/css/mainCss.css">
@@ -38,7 +38,7 @@
 </table>
 
 <br/>
-<div>
+<div th:sec="${roleName.equals('admin')}">
     <a href="/matches/new" class="btn">Добавить Матч</a>
 </div>
 <div><a href="/home" class="btn">Главная страница</a></div>

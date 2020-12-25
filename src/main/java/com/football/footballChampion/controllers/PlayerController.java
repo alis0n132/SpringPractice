@@ -7,6 +7,7 @@ import com.football.footballChampion.services.GoalService;
 import com.football.footballChampion.services.PlayerService;
 import com.football.footballChampion.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,6 +47,7 @@ public class PlayerController {
     }
 
     @GetMapping("/players/new")
+    @PreAuthorize("hasAuthority('write')")
     public String addPlayerPage(Model model){
         List<TeamEntity> teams = teamService.listAll();
         model.addAttribute("teams", teams);
@@ -54,18 +56,21 @@ public class PlayerController {
         return "playerDir/newPlayer";
     }
     @PostMapping("/players/new")
+    @PreAuthorize("hasAuthority('write')")
     public String addPlayer(PlayerEntity player){
         playerService.save(player);
         return "redirect:/players";
     }
 
-    @GetMapping("/deletePlayer/{id}")
+    @GetMapping("/players/delete/{id}")
+    @PreAuthorize("hasAuthority('write')")
     public String deletePlayer(@PathVariable("id") Integer id){
         playerService.deleteById(id);
         return "redirect:/players";
     }
 
-    @GetMapping("/editPlayer/{id}")
+    @GetMapping("/players/edit/{id}")
+    @PreAuthorize("hasAuthority('write')")
     public String editPlayerPage(@PathVariable("id") Integer id, Model model){
         PlayerEntity player = playerService.getPlayerById(id);
         List<TeamEntity> teams = teamService.listAll();
@@ -76,7 +81,8 @@ public class PlayerController {
         return "/playerDir/editPlayer";
     }
 
-    @PostMapping("/editPlayer")
+    @PostMapping("/players/edit")
+    @PreAuthorize("hasAuthority('write')")
     public String editPlayer(PlayerEntity playerEntity){
         playerService.save(playerEntity);
         return "redirect:/players";

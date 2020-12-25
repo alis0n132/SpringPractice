@@ -59,7 +59,7 @@
 
     <div th:unless="${player.getCards() != null}"><h4>Карточек в этого игрока нет</h4></div>
 </div>
-<div><a th:href="@{~/editPlayer/{id}(id=${player.getPlayerId()})}" class="btn">Редактировать Игрока</a></div>
+<div><a th:href="@{~/players/edit/{id}(id=${player.getPlayerId()})}" class="btn">Редактировать Игрока</a></div>
 <div><a href="/players" class="btn">Игроки</a></div>
 <div><a href="/home" class="btn">Главная страница</a></div>
 </body>

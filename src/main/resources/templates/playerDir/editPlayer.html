@@ -9,7 +9,11 @@
     <h1>Редактирование игрока №</h1>
     <h1 th:text="${player.playerId}"></h1>
 </div>
-<form action="/editPlayer" method="post" th:object="${player}">
+<form th:action="@{/players/edit}" method="post" th:object="${player}">
+
+    <label for="playerId" hidden>
+        <input class="input" type="text" hidden th:field="*{playerId}" id="playerId"/>
+    </label>
 
     <label for="playerName">Имя Игрока</label>
     <input class="input" type="text" th:field="*{name}" id="playerName"/>
@@ -30,7 +34,7 @@
         </div>
     </div>
     <div>
-        <input  type="submit" value="Изменить Игрока" >
+        <input class="btn" type="submit" value="Изменить Игрока" >
     </div>
 
 </form>

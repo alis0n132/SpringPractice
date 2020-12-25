@@ -4,6 +4,7 @@ import com.football.footballChampion.entities.TeamEntity;
 import com.football.footballChampion.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -45,12 +46,14 @@ public class TeamController {
     }
 
     @GetMapping("/teams/new")
+    @PreAuthorize("hasAuthority('write')")
     public String addTeamPage(Model model) {
         model.addAttribute("newTeam", new TeamEntity());
         return "teamDir/newTeam";
     }
 
     @PostMapping("/teams/new")
+    @PreAuthorize("hasAuthority('write')")
     public String addTeam(TeamEntity team, @RequestParam("file") MultipartFile file) {
         if (file != null) {
             try {
@@ -65,12 +68,14 @@ public class TeamController {
     }
 
     @GetMapping("/deleteTeam/{id}")
+    @PreAuthorize("hasAuthority('write')")
     public String deletePlayer(@PathVariable("id") Integer id) {
         teamService.deleteById(id);
         return "redirect:/teams";
     }
 
     @GetMapping("/editTeam/{id}")
+    @PreAuthorize("hasAuthority('write')")
     public String editTeamPage(@PathVariable("id") Integer id, Model model) {
         TeamEntity team = teamService.getTeamById(id);
         model.addAttribute("team", team);
@@ -79,6 +84,7 @@ public class TeamController {
     }
 
     @PostMapping("/editTeam")
+    @PreAuthorize("hasAuthority('write')")
     public String editTeam(TeamEntity team) {
         teamService.save(team);
         return "redirect:/teams";

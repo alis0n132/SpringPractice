@@ -5,6 +5,7 @@ import com.football.footballChampion.visitors.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -17,25 +18,18 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http
+                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/").permitAll()
-                .antMatchers(HttpMethod.GET, "/deletePlayer/*").hasAuthority(Permission.WRITE.getPermission())
-                .antMatchers(HttpMethod.GET, "/players/new").hasRole(Permission.WRITE.getPermission())
-                .antMatchers(HttpMethod.GET, "/teams/new").hasRole(Permission.WRITE.getPermission())
-                .antMatchers(HttpMethod.GET, "/deleteTeam/*").hasRole(Permission.WRITE.getPermission())
-                .antMatchers(HttpMethod.GET, "/deleteMatch/*").hasRole(Permission.WRITE.getPermission())
-                .antMatchers(HttpMethod.GET, "/matches/new").hasRole(Permission.WRITE.getPermission())
-                .antMatchers(HttpMethod.POST, "/**").hasRole(Permission.WRITE.getPermission())
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
-
     }
 
     @Bean

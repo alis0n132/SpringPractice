@@ -20,7 +20,7 @@
         <td><a th:href="@{/players/{id}(id=${player.getPlayerId()})}" th:text="${player.getName()}"></a></td>
         <td th:text="${player.getBio()}"/>
         <td th:text="${player.getTeam().getName()}"/>
-        <td><a th:href="@{/deletePlayer/{id}(id=${player.getPlayerId()})}">Удалить</a></td>
+        <td><a th:href="@{delete/{id}(id=${player.getPlayerId()})}">Удалить</a></td>
     </tr>
 </table>
 <div>
